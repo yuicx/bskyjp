@@ -38,10 +38,10 @@ const AppContent: React.FC = () => {
               <div className="flex items-center space-x-3">
                 <img 
                   src="/bskyjp.svg" 
-                   alt="Bskyjp" 
+                   alt="Logo" 
                   className="h-8 w-8"
                 />
-                <h1 className="text-xl font-bold text-blue-600">Bluesky JP</h1>
+                <h1 className="text-xl font-bold text-blue-600">jp</h1>
               </div>
               <nav className="flex space-x-4">
                 <button
