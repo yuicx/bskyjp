@@ -7,3 +7,6 @@ bskyjp is a web client application for Bluesky primarily built using TypeScript.
 **Contacts** <br>
 [Twitter](https://twitter.com/yuikun_xt)
 [Bluesky](https://baky.app/profile/wilsie.bsky.social)
+
+**Release Note**
+[GitHub Release](https://github.com/yuicx/bskyjp/releases)
