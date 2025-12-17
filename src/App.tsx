@@ -41,7 +41,6 @@ const AppContent: React.FC = () => {
                    alt="Logo" 
                   className="h-8 w-8"
                 />
-                <h1 className="text-xl font-bold text-blue-600">jp</h1>
               </div>
               <nav className="flex space-x-4">
                 <button
