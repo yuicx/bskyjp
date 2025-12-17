@@ -7,6 +7,3 @@ bskyjp is a web client application for Bluesky primarily built using TypeScript.
 **Contacts** <br>
 [Twitter](https://twitter.com/yuikun_xt)
 [Bluesky](https://baky.app/profile/wilsie.bsky.social)
-
-**Logo** <br>
-<img width="100" height="100" alt="head" src="https://blueskyjp.vercel.app/bskyjp.svg" />
