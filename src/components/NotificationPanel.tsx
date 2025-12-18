@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Bell, Heart, MessageCircle, Repeat2, UserPlus } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import BlueskyService from '../services/bluesky';
+import VerificationBadge from './VerificationBadge';
 
 interface Notification {
   id: string;
@@ -21,6 +23,7 @@ interface Notification {
 const NotificationPanel: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   
   const blueskyService = new BlueskyService();
 
@@ -81,12 +84,12 @@ const NotificationPanel: React.FC = () => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white min-h-screen">
-      <div className="sticky top-0 bg-white border-b border-gray-200 p-4">
+    <div className="max-w-2xl mx-auto bg-white min-h-screen md:rounded-2xl md:shadow-sm">
+      <div className="sticky top-0 bg-white border-b border-gray-200 p-4 md:rounded-t-2xl">
         <h1 className="text-xl font-bold text-gray-900">通知</h1>
       </div>
       
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y divide-gray-200 pb-20 md:pb-0">
         {notifications.length === 0 ? (
           <div className="text-center p-8 text-gray-500">
             <Bell className="h-12 w-12 text-gray-300 mx-auto mb-4" />
@@ -94,7 +97,11 @@ const NotificationPanel: React.FC = () => {
           </div>
         ) : (
           notifications.map((notification) => (
-            <div key={notification.id} className="p-4 hover:bg-gray-50 transition-colors">
+            <button 
+              key={notification.id} 
+              onClick={() => navigate(`/profile/${notification.author.handle}`)}
+              className="w-full p-4 hover:bg-gray-50 transition-colors text-left"
+            >
               <div className="flex space-x-3">
                 <div className="flex-shrink-0">
                   {getNotificationIcon(notification.type)}
@@ -127,6 +134,11 @@ const NotificationPanel: React.FC = () => {
                     {getNotificationText(notification)}
                   </p>
                   
+                  <div className="flex items-center space-x-1 mb-2">
+                    <span className="text-sm text-gray-600">@{notification.author.handle}</span>
+                    <VerificationBadge handle={notification.author.handle} size="sm" />
+                  </div>
+                  
                   {notification.post && (
                     <div className="bg-gray-50 p-3 rounded-lg">
                       <p className="text-gray-700 text-sm">
@@ -136,7 +148,7 @@ const NotificationPanel: React.FC = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </button>
           ))
         )}
       </div>
