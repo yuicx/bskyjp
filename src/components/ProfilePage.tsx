@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Calendar, Users, MessageSquare } from 'lucide-react';
 import BlueskyService from '../services/bluesky';
+import VerificationBadge from './VerificationBadge';
 import type { BlueskyProfile, UserJoinDate } from '../types/bluesky';
 
-interface ProfilePageProps {
-  handle: string;
-}
-
-const ProfilePage: React.FC<ProfilePageProps> = ({ handle }) => {
+const ProfilePage: React.FC = () => {
+  const { handle } = useParams<{ handle: string }>();
   const [profile, setProfile] = useState<BlueskyProfile | null>(null);
   const [joinDate, setJoinDate] = useState<UserJoinDate | null>(null);
   const [loading, setLoading] = useState(true);
@@ -15,6 +14,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ handle }) => {
   const blueskyService = new BlueskyService();
 
   useEffect(() => {
+    if (!handle) return;
+    
     const loadProfile = async () => {
       setLoading(true);
       
@@ -46,7 +47,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ handle }) => {
     );
   }
 
-  if (!profile) {
+  if (!profile || !handle) {
     return (
       <div className="max-w-2xl mx-auto bg-white min-h-screen">
         <div className="text-center p-8 text-gray-500">
@@ -57,7 +58,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ handle }) => {
   }
 
   return (
-    <div className="max-w-2xl mx-auto bg-white min-h-screen rounded-2xl shadow-sm overflow-hidden">
+    <div className="max-w-2xl mx-auto bg-white min-h-screen md:rounded-2xl md:shadow-sm overflow-hidden pb-20 md:pb-0">
       {/* バナー */}
       <div className="h-48 bg-gradient-to-r from-blue-400 to-cyan-400 relative">
         {profile.banner && (
@@ -90,8 +91,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ handle }) => {
 
         <div className="pt-20">
           <div className="mb-4">
-            <h1 className="text-2xl font-bold text-gray-900">
-              {profile.displayName || profile.handle}
+            <h1 className="text-2xl font-bold text-gray-900 flex items-center space-x-2">
+              <span>{profile.displayName || profile.handle}</span>
+              <VerificationBadge handle={profile.handle} size="lg" />
             </h1>
             <p className="text-gray-600">@{profile.handle}</p>
           </div>
